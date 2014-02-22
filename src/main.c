@@ -45,7 +45,25 @@ void gpio_set_output(int port, int pin, int enable) {
     }
 }
 
+// 割り込みカウンタ。1秒ごとにゼロリセット
+volatile unsigned long systick_count = 0;
+
+/**
+ * SysTick用割り込みハンドラ
+ */
+void SysTick_Handler(void) {
+	systick_count++;
+	if (1000 <= systick_count) {
+		systick_count = 0;
+	}
+}
+
 int main(void) {
+	// クロック設定の更新
+	SystemCoreClockUpdate();
+	// 1msごとにSysTick割り込みを設定
+	SysTick_Config(SystemCoreClock / 1000);
+
 	// GPIOの初期化
 	gpio_init();
 	// LED用のGPIOピンを出力に設定
@@ -55,14 +73,14 @@ int main(void) {
 	int led_on = 0;
     // Enter an infinite loop
     while(1) {
-        // led_onに合わせてLEDを点灯したり消灯したりする
-    	gpio_set_output(LED_PORT, LED_PIN, led_on);
-        // led_onの状態を反転する
-        led_on = !led_on;
-
-        // ちょっと待つ
-        for (long i = 0; i < 1000000; i++) {
-        }
+    	// 点灯すべきかどうか計算
+    	int next_led = systick_count < 500;
+    	if (led_on != next_led) {
+            // led_onに合わせてLEDを点灯したり消灯したりする
+        	gpio_set_output(LED_PORT, LED_PIN, systick_count < 500);
+        	// LEDの出力状態を更新する
+    		led_on = next_led;
+    	}
     }
     return 0;
 }
