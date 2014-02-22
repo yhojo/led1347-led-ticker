@@ -14,17 +14,11 @@
 
 #include <cr_section_macros.h>
 
-// TODO: insert other include files here
-
-// TODO: insert other definitions and declarations here
-
 // LEDのポート番号と、ピン番号を定義
 #define LED_PORT 0
 #define LED_PIN 1
 
 int main(void) {
-
-    // TODO: insert code here
 	// GPIOドメインの電源を入れる
 	LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
 	// LED用のGPIOピンを出力に設定
@@ -32,11 +26,8 @@ int main(void) {
 
 	// LEDの次の出力状態を保持する変数
 	int led_on = 0;
-    // Force the counter to be placed into memory
-    volatile static int i = 0 ;
     // Enter an infinite loop, just incrementing a counter
     while(1) {
-        i++ ;
         // led_onに合わせてLEDを点灯したり消灯したりする
         if (led_on) {
         	// 点灯する
@@ -49,8 +40,8 @@ int main(void) {
         led_on = !led_on;
 
         // ちょっと待つ
-        for (long j = 0; j < 1000000; j++) {
+        for (long i = 0; i < 1000000; i++) {
         }
     }
-    return 0 ;
+    return 0;
 }
