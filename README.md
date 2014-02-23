@@ -11,7 +11,7 @@ LPC1347の`P0_1`という汎用I/Oピン(GPIOピン)にLEDを接続して点滅�
 
 はじめに電源ラインだけ配線します。
 
-![電源ラインの配線](./power-lines.png)
+![電源ラインの配線](./images/power-lines.png)
 
 配線するのは次の3本です。
 
@@ -23,7 +23,7 @@ LPC1347の`P0_1`という汎用I/Oピン(GPIOピン)にLEDを接続して点滅�
 
 評価ボードを左側は`i1`から`i27`まで、右側は`b1`から`b27`まで刺さるように刺します。
 
-![LPC1347ボード](./put-logic-board.png)
+![LPC1347ボード](./images/put-logic-board.png)
 
 ## LEDと抵抗を刺す
 
